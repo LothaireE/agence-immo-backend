@@ -1,7 +1,7 @@
 const db = require("../../app/database_sql.js");
 
 module.exports = class UserRepository {
-  getAll(offset = 0, limit = 100) {
+  selectAll(offset = 0, limit = 100) {
     return db
       .promise()
       .query("SELECT * FROM users LIMIT ?, ?", [offset, limit])

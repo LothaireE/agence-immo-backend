@@ -7,8 +7,8 @@ module.exports = class UserController {
     const limit = 100;
     const offset = page * limit - limit;
     const User = new UserRepository();
-    User.countAll().then((count) => {});
-    User.getAll(offset, limit).then((users) => {
+    //User.countAll().then((count) => {});
+    User.selectAll(offset, limit).then((users) => {
       res.status(200).json(users);
     });
   }
@@ -43,14 +43,14 @@ module.exports = class UserController {
     });
     console.log("entity ici", entity);
     const User = new UserRepository();
-    User.update(req.params.id, entity).then((result) => {
-      res.status(200).json(serviceResponse(result));
+    User.update(req.params.id, entity).then((records) => {
+      res.status(200).json(serviceResponse(records));
     });
   }
   removeOne(req, res) {
     const User = new UserRepository();
-    User.delete(req.params.id).then((result) => {
-      res.status(200).json(serviceResponse(result));
+    User.delete(req.params.id).then((records) => {
+      res.status(200).json(serviceResponse(records));
     });
   }
 };
