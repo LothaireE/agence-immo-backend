@@ -1,6 +1,8 @@
 const db = require("../../app/database_sql.js");
 
 module.exports = class RealtyRepository {
+  // le detail des methodes en controller : requetes sql
+
   selectAll(offset = 0, limit = 100) {
     return db
       .promise()
@@ -20,10 +22,17 @@ module.exports = class RealtyRepository {
       )
       .then((result) => result[0]);
   }
-  countAll() {
-    return db
-      .promise()
-      .query("SELECT COUNT(*) AS nb FROM realties")
-      .then((result) => result[0][0].nb);
+  countAll(type = null) {
+    if (type === null) {
+      return db
+        .promise()
+        .query("SELECT COUNT(*) AS nb FROM realties")
+        .then((result) => result[0][0].nb);
+    } else {
+      return db
+        .promise()
+        .query("SELECT COUNT(*) AS nb FROM realties WHERE type=?", [type])
+        .then((result) => result[0][0].nb);
+    }
   }
 };

@@ -2,6 +2,7 @@ const TypeRealtyRepository = require("../repository/TypeRealtyRepository");
 const serviceResponse = require("../service/dataApiResponse");
 
 module.exports = class TypeRealtyController {
+  // Les méthodes  solicitées par la route.type_realties
   getAll(req, res) {
     const page = req.query.page || 1;
     const limit = 100;
@@ -20,14 +21,12 @@ module.exports = class TypeRealtyController {
     });
   }
   createOne(req, res) {
-    console.log("celui ci", req.body);
     const TypeReality = new TypeRealtyRepository();
     TypeReality.addRealty(req.body.name).then((typeRealities) => {
       res.status(200).json(typeRealities);
     });
   }
   updateOne(req, res) {
-    console.log("req.params.id", req.params.id);
     let entity = {};
     //fields au plutiel car je me laisse la possibilité d'un ajout de detail
     let fields = ["name"];

@@ -1,4 +1,4 @@
-module.exports = require("mysql2").createConnection({
+module.exports = require("mysql2").createPool({
   host: process.env.SQL_HOST || "localhost",
   user: process.env.SQL_USER || "root",
   password: process.env.SQL_PASSWORD || "",

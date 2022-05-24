@@ -1,6 +1,7 @@
 const db = require("../../app/database_sql.js");
 
 module.exports = class TypeRealtyRepository {
+  // le detail des methodes en controller : requetes sql
   selectAll(offset = 0, limit = 100) {
     return db
       .promise()

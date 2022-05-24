@@ -2,14 +2,17 @@ const UserRepository = require("../repository/UserRepository");
 const serviceResponse = require("../service/dataApiResponse");
 
 module.exports = class UserController {
+  // Les méthodes  solicitées par la route.users
   getAll(req, res) {
     const page = req.query.page || 1;
-    const limit = 100;
+    const limit = 24;
     const offset = page * limit - limit;
     const User = new UserRepository();
-    //User.countAll().then((count) => {});
-    User.selectAll(offset, limit).then((users) => {
-      res.status(200).json(users);
+
+    User.countAll().then((count) => {
+      User.selectAll(offset, limit).then((records) => {
+        res.status(200).json(serviceResponse(records, page, count, limit));
+      });
     });
   }
   getOne(req, res) {
@@ -33,12 +36,14 @@ module.exports = class UserController {
   }
   updateOne(req, res) {
     console.log("req.params.id", req.params.id);
+    console.log("req.body", req.body);
     // entity est l'objet vide dans lequel je vais charger mes champs modifiés
     // c'est entity que je vais "push" dans ma table users
     let entity = {};
     // fields les colonnes concernées dans la table users
     let fields = ["firstname", "lastname", "email", "password"];
     fields.forEach((field) => {
+      // c'est ici que je trie les champs modifiés
       if (req.body[field]) entity[field] = req.body[field];
     });
     console.log("entity ici", entity);
